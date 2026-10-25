@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="Smart Campus Companion - tasks, campus directory, personalised recommendations, and profile settings for students." />
+  <meta name="theme-color" content="#2563eb" />
+  <title>Smart Campus Companion</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+      <div class="sidebar__brand">
+        <div class="brand-mark" aria-hidden="true">SC</div>
+        <div class="brand-text"><span class="brand-name">Campus Companion</span><span class="brand-sub">Smart Student Hub</span></div>
+      </div>
+      <nav><ul class="nav-list" role="list">
+        <li><button class="nav-item is-active" data-view="dashboard" aria-current="page"><span class="nav-icon">D</span><span>Dashboard</span></button></li>
+        <li><button class="nav-item" data-view="tasks"><span class="nav-icon">T</span><span>Task Manager</span></button></li>
+        <li><button class="nav-item" data-view="directory"><span class="nav-icon">P</span><span>Campus Directory</span></button></li>
+        <li><button class="nav-item" data-view="recommendations"><span class="nav-icon">R</span><span>Recommendations</span></button></li>
+        <li><button class="nav-item" data-view="profile"><span class="nav-icon">U</span><span>Profile &amp; Settings</span></button></li>
+      </ul></nav>
+      <div class="sidebar__footer"><div class="user-chip" id="sidebarUser"><div class="avatar avatar--sm" id="sidebarAvatar">S</div><div class="user-chip__text"><span class="user-chip__name" id="sidebarName">Student</span><span class="user-chip__meta" id="sidebarMajor">Undeclared</span></div></div></div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">Menu</button>
+        <h1 class="topbar__title" id="viewTitle">Dashboard</h1>
+        <div class="topbar__actions">
+          <button class="icon-btn" id="themeToggle" aria-label="Toggle colour theme">Theme</button>
+          <div class="avatar" id="topAvatar" aria-label="User avatar">S</div>
+        </div>
+      </header>
+      <main id="main-content" class="content" tabindex="-1">
+        <section id="view-dashboard" class="view is-active" aria-labelledby="dashboard-heading">
+          <header class="view-header"><div><h2 id="dashboard-heading">Good morning, <span id="greetName">Student</span></h2><p class="view-sub">Here is your personalised campus overview for today.</p></div><div class="quick-actions"><button class="btn btn--primary" data-action="new-task">+ New Task</button><button class="btn btn--ghost" data-view-jump="directory">Find Contact</button></div></header>
+          <div class="cards-grid" id="summaryCards">
+            <article class="stat-card"><div class="stat-card__icon stat-card__icon--blue" aria-hidden="true">Tasks</div><div class="stat-card__body"><span class="stat-card__label">Pending Tasks</span><span class="stat-card__value" id="statPending">0</span></div></article>
+            <article class="stat-card"><div class="stat-card__icon stat-card__icon--green" aria-hidden="true">Done</div><div class="stat-card__body"><span class="stat-card__label">Completed</span><span class="stat-card__value" id="statCompleted">0</span></div></article>
+            <article class="stat-card"><div class="stat-card__icon stat-card__icon--purple" aria-hidden="true">People</div><div class="stat-card__body"><span class="stat-card__label">Directory Entries</span><span class="stat-card__value" id="statDirectory">0</span></div></article>
+            <article class="stat-card"><div class="stat-card__icon stat-card__icon--amber" aria-hidden="true">Star</div><div class="stat-card__body"><span class="stat-card__label">New Recommendations</span><span class="stat-card__value" id="statRecs">0</span></div></article>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel" aria-labelledby="upcoming-heading"><div class="panel__header"><h3 id="upcoming-heading">Today's Schedule</h3><span class="panel__meta" id="todayDate"></span></div><ul class="schedule-list" id="scheduleList" role="list"></ul></section>
+            <section class="panel" aria-labelledby="recenttasks-heading"><div class="panel__header"><h3 id="recenttasks-heading">Upcoming Tasks</h3><button class="link-btn" data-view-jump="tasks">View all</button></div><ul class="task-mini-list" id="recentTasks" role="list"></ul></section>
+            <section class="panel panel--wide" aria-labelledby="recspreview-heading"><div class="panel__header"><h3 id="recspreview-heading">For You</h3><button class="link-btn" data-view-jump="recommendations">See all</button></div><div class="rec-preview" id="recPreview"></div></section>
+          </div>
+        </section>
+        <section id="view-tasks" class="view" aria-labelledby="tasks-heading" hidden>
+          <header class="view-header"><div><h2 id="tasks-heading">Task Manager</h2><p class="view-sub">Organise coursework, deadlines, and personal goals.</p></div></header>
+          <div class="task-toolbar">
+            <form id="taskForm" class="task-form" aria-label="Add new task">
+              <div class="field field--grow"><label class="sr-only" for="taskTitle">Task title</label><input type="text" id="taskTitle" name="title" placeholder="What do you need to do?" required maxlength="120" /></div>
+              <div class="field"><label class="sr-only" for="taskDue">Due date</label><input type="date" id="taskDue" name="due" /></div>
+              <div class="field"><label class="sr-only" for="taskPriority">Priority</label><select id="taskPriority" name="priority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select></div>
+              <div class="field"><label class="sr-only" for="taskCategory">Category</label><select id="taskCategory" name="category"><option value="Study">Study</option><option value="Assignment">Assignment</option><option value="Personal">Personal</option><option value="Admin">Admin</option></select></div>
+              <button type="submit" class="btn btn--primary">Add Task</button>
+            </form>
+            <div class="filter-row" role="tablist" aria-label="Task filters">
+              <button class="filter-chip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+              <button class="filter-chip" data-filter="active" role="tab" aria-selected="false">Active</button>
+              <button class="filter-chip" data-filter="completed" role="tab" aria-selected="false">Completed</button>
+            </div>
+          </div>
+          <ul class="task-list" id="taskList" role="list" aria-live="polite"></ul>
+        <div class="empty-state" id="taskEmpty" hidden>
+          <div class="empty-state__icon" aria-hidden="true">✓</div>
+          <h3 class="empty-state__title">No tasks here yet</h3>
+          <p class="empty-state__text">Add a task above to get started.</p>
+        </div>
+        </section>
+        <section id="view-directory" class="view" aria-labelledby="directory-heading" hidden>
+          <header class="view-header"><div><h2 id="directory-heading">Campus Directory</h2><p class="view-sub">Find faculty, services, clubs, and buildings across campus.</p></div></header>
+          <div class="directory-toolbar">
+            <div class="search-box"><span aria-hidden="true">Search</span><label class="sr-only" for="dirSearch">Search directory</label><input type="search" id="dirSearch" placeholder="Search by name, role, or tag..." /></div>
+            <div class="filter-row" id="dirFilters" role="tablist" aria-label="Directory categories">
+              <button class="filter-chip is-active" data-cat="all" role="tab" aria-selected="true">All</button>
+              <button class="filter-chip" data-cat="Faculty" role="tab" aria-selected="false">Faculty</button>
+              <button class="filter-chip" data-cat="Staff" role="tab" aria-selected="false">Staff</button>
+              <button class="filter-chip" data-cat="Service" role="tab" aria-selected="false">Services</button>
+              <button class="filter-chip" data-cat="Club" role="tab" aria-selected="false">Clubs</button>
+              <button class="filter-chip" data-cat="Building" role="tab" aria-selected="false">Buildings</button>
+            </div>
+          </div>
+          <div class="directory-grid" id="directoryGrid" aria-live="polite"></div>
+          <div class="empty-state" id="dirEmpty" hidden>
+            <div class="empty-state__icon" aria-hidden="true">⌕</div>
+            <h3 class="empty-state__title">No matches found</h3>
+            <p class="empty-state__text">Try a different search or category.</p>
+            <button class="btn btn--ghost btn--sm" type="button" id="clearDirSearch">Clear search</button>
+          </div>
+        </section>
+
+        <section id="view-recommendations" class="view" aria-labelledby="recs-heading" hidden>
+          <header class="view-header"><div><h2 id="recs-heading">Personalised Recommendations</h2><p class="view-sub">Opportunities, resources, and events tailored to your profile.</p></div></header>
+          <div class="recs-toolbar">
+            <div class="field"><label for="recCategory">Category</label><select id="recCategory"><option value="all">All</option><option value="Academic">Academic</option><option value="Career">Career</option><option value="Wellness">Wellness</option><option value="Social">Social</option><option value="Tech">Tech</option></select></div>
+            <div class="field"><label for="recSort">Sort by</label><select id="recSort"><option value="relevance">Relevance</option><option value="newest">Newest</option></select></div>
+          </div>
+          <div class="recs-grid" id="recsGrid" aria-live="polite"></div>
+          <div class="empty-state" id="recsEmpty" hidden>
+            <div class="empty-state__icon" aria-hidden="true">✦</div>
+            <h3 class="empty-state__title">No recommendations match</h3>
+            <p class="empty-state__text">Adjust your filters or update your profile interests.</p>
+            <button class="btn btn--ghost btn--sm" type="button" id="resetRecFilters">Reset filters</button>
+          </div>
+        </section>
+        <section id="view-profile" class="view" aria-labelledby="profile-heading" hidden>
+          <header class="view-header"><div><h2 id="profile-heading">Profile &amp; Settings</h2><p class="view-sub">Personalise your companion experience.</p></div></header>
+          <div class="profile-grid">
+            <section class="panel" aria-labelledby="profileform-heading">
+              <h3 id="profileform-heading">Your Details</h3>
+              <form id="profileForm" class="profile-form">
+                <div class="field"><label for="profileName">Full name</label><input type="text" id="profileName" required maxlength="60" /></div>
+                <div class="field"><label for="profileMajor">Major / Programme</label><select id="profileMajor"><option>Computer Science</option><option>Engineering</option><option>Business</option><option>Medicine</option><option>Arts &amp; Humanities</option><option>Sciences</option><option>Undeclared</option></select></div>
+                <div class="field"><label>Interests (select all that apply)</label><div class="chip-group" id="interestChips" role="group" aria-label="Interests">
+                  <button type="button" class="interest-chip" data-interest="AI">AI</button>
+                  <button type="button" class="interest-chip" data-interest="Coding">Coding</button>
+                  <button type="button" class="interest-chip" data-interest="Design">Design</button>
+                  <button type="button" class="interest-chip" data-interest="Research">Research</button>
+                  <button type="button" class="interest-chip" data-interest="Entrepreneurship">Entrepreneurship</button>
+                  <button type="button" class="interest-chip" data-interest="Wellness">Wellness</button>
+                  <button type="button" class="interest-chip" data-interest="Sports">Sports</button>
+                  <button type="button" class="interest-chip" data-interest="Music">Music</button>
+                </div></div>
+                <div class="field"><label for="profileYear">Year of study</label><select id="profileYear"><option>Year 1</option><option>Year 2</option><option>Year 3</option><option>Year 4</option><option>Postgraduate</option></select></div>
+                <button type="submit" class="btn btn--primary">Save Profile</button>
+              </form>
+            </section>
+            <section class="panel" aria-labelledby="settings-heading">
+              <h3 id="settings-heading">Preferences</h3>
+              <div class="settings-list">
+                <div class="setting-row"><div><span class="setting-label">Colour theme</span><span class="setting-desc">Switch between light and dark mode.</span></div><button class="btn btn--ghost" id="themeToggle2">Toggle</button></div>
+                <div class="setting-row"><div><span class="setting-label">Clear all tasks</span><span class="setting-desc">Permanently remove every task.</span></div><button class="btn btn--danger" id="clearTasksBtn">Clear</button></div>
+                <div class="setting-row"><div><span class="setting-label">Reset saved recommendations</span><span class="setting-desc">Restore dismissed recommendations.</span></div><button class="btn btn--ghost" id="resetRecsBtn">Reset</button></div>
+                <div class="setting-row"><div><span class="setting-label">Reset all data</span><span class="setting-desc">Restore the app to its initial state.</span></div><button class="btn btn--danger" id="resetAllBtn">Reset All</button></div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="script.js"></script>
+</body>
+</html>
+
